@@ -702,7 +702,8 @@ class GenerationMixin:
 
             # forward pass to get next token
             outputs = self(**model_inputs, return_dict=True)
-            attentions.append(outputs["cross_attentions"])
+            print("keys", outpus.keys())
+            attentions.append(outputs.cross_attentions)
             next_token_logits = outputs.logits[:, -1, :]
 
             # pre-process distribution
