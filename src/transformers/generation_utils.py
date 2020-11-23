@@ -695,12 +695,14 @@ class GenerationMixin:
             input_ids, max_length
         )
 
+        attentions = []
         while cur_len < max_length:
             # prepare model inputs
             model_inputs = self.prepare_inputs_for_generation(input_ids, **model_kwargs)
 
             # forward pass to get next token
             outputs = self(**model_inputs, return_dict=True)
+            attentions.append(outputs["cross_attentions"])
             next_token_logits = outputs.logits[:, -1, :]
 
             # pre-process distribution
@@ -735,7 +737,8 @@ class GenerationMixin:
             # increase cur_len
             cur_len = cur_len + 1
 
-        return input_ids
+        print(attentions)
+        return input_ids, attentions
 
     def sample(
         self,
