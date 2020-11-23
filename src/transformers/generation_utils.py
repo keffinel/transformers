@@ -737,7 +737,6 @@ class GenerationMixin:
             # increase cur_len
             cur_len = cur_len + 1
 
-        print(attentions)
         return input_ids, dicts
 
     def sample(
