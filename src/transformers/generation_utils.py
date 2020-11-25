@@ -695,13 +695,14 @@ class GenerationMixin:
             input_ids, max_length
         )
 
+        print(f"curr len {cur_len}")
         cross_attentions = []
         while cur_len < max_length:
             # prepare model inputs
             model_inputs = self.prepare_inputs_for_generation(input_ids, **model_kwargs)
 
             # forward pass to get next token
-            outputs = self(**model_inputs, output_attentions = True, return_dict=True)
+            outputs = self(**model_inputs, output_attentions=True, return_dict=True)
             cross_attentions.append(outputs.cross_attentions)
             next_token_logits = outputs.logits[:, -1, :]
 
